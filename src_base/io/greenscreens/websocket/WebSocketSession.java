@@ -273,7 +273,9 @@ public class WebSocketSession implements Session {
     }
 
     public final WebSocketResponse wrap(final Object o, final boolean keepTransaction) {
+
         ExtJSDirectResponse<?> directResponse = null;
+      
         if (o instanceof ExtJSDirectResponse) {
             directResponse = (ExtJSDirectResponse<?>) o;
         } else {
@@ -285,15 +287,15 @@ public class WebSocketSession implements Session {
         wsResponse.setData(directResponse);
         return wsResponse;
     }
+    
+    @Override
+    public <T> void addMessageHandler(Class<T> arg0, Whole<T> arg1) {
+	// TODO Auto-generated method stub
+    }
 
-	@Override
-	public <T> void addMessageHandler(Class<T> arg0, Whole<T> arg1) {
-		// TODO Auto-generated method stub		
-	}
-
-	@Override
-	public <T> void addMessageHandler(Class<T> arg0, Partial<T> arg1) {
-		// TODO Auto-generated method stub		
-	}
+    @Override
+    public <T> void addMessageHandler(Class<T> arg0, Partial<T> arg1) {
+	// TODO Auto-generated method stub
+    }
 
 }
