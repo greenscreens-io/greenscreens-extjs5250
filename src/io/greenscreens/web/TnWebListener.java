@@ -7,7 +7,6 @@ import io.greenscreens.data.TnConfigLoader;
 import io.greenscreens.data.TnConstants;
 import io.greenscreens.data.TnHost;
 import io.greenscreens.tn5250.ITn5250Session;
-import io.greenscreens.web.gzip.GZipCache;
 import io.greenscreens.websocket.WebSocketEventStatus;
 import io.greenscreens.websocket.WebSocketSession;
 import io.greenscreens.websocket.WebsocketEvent;
@@ -139,7 +138,6 @@ public final class TnWebListener implements HttpSessionListener, ServletContextL
     	removed = true;
         final ServletContext servletContext = arg0.getServletContext();
         servletContext.removeAttribute(TnHost.class.getCanonicalName());
-        GZipCache.release(servletContext);
     }
 
     /**

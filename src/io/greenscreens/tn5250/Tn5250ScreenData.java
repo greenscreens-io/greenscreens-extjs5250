@@ -3,15 +3,6 @@
  */
 package io.greenscreens.tn5250;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +13,6 @@ import org.tn5250j.framework.tn5250.Screen5250;
 import org.tn5250j.framework.tn5250.ScreenField;
 import org.tn5250j.framework.tn5250.ScreenFields;
 
-import io.greenscreens.WS4ISConstants;
 import io.greenscreens.data.tn5250.Tn5250ScreenElement;
 
 /**
