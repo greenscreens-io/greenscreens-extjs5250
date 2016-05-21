@@ -7,7 +7,7 @@ $(document).on("ready", function () {
     });
     Markdown.Toc.init(me.converter);    
         
-	$.ajax({ url: 'Instruction.md'}).done(function( data ) {
+	$.ajax({ url: 'Instructions.md'}).done(function( data ) {
 		debugger;
 
 		var html = me.converter.makeHtml(data);
