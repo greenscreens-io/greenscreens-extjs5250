@@ -110,11 +110,9 @@ prod.display_prefix=WEB
 
 ### Install Java web app
 
-To install war file, Java server should be full JEE 7 certified server. Also, web container only serbers are supported with servlet 3.1 speciffication. If servlet only is used, CDI implementation jar should be added to application. We have tested JBoss WELD. 
+To install war file, Java server should be full JEE 7 certified server. Web container only servers are supported with servlet 3.1 specification. If servlet only is used, CDI implementation jar should be added to the application. We have tested JBoss WELD. 
 
 For Tomcat 8+ it is enough to add weld-servlet.jar file to WebContent/WEB-INF/lib.
-
-Demo code is compiled with Java 1.8 so server should use also Java 1.8. It is possible to compile with Java 1.7.
 
 **war** file can be copied to Java server drop-in folder or installed through web interface. This depends on Java server that is used.  
 

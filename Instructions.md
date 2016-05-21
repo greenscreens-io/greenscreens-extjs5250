@@ -9,7 +9,7 @@ GreenScreens Terminal Instructions
 
 **Requirements**
 >- Java EE 1.7+
->- Full JEE7 server like WildFly 8/9
+>- Any Full JEE7 server like WildFly 8/9/10 or Tomcat 
 >- WebKit (Chrome, Firefox), IE 9+
 
 **Features**
@@ -51,24 +51,24 @@ File contains global properties and server level properties.
 
 Property           | Type    | Description
 ------------------ | -------------------------------------------------------------
-*5250_prefixes*    | Strings | List of virtual names of defined servers available to web app.
-*5250.shared_pwd*  | String  | 16 chars long password
-*5250.shared_iv*   | String  | 16 chars long initialization vector
-*5250.shared_time* | Number  | Password expiration in seconds
+*prefixes*    | Strings | List of virtual names of defined servers available to web app.
+*shared_pwd*  | String  | 16 chars long password
+*shared_iv*   | String  | 16 chars long initialization vector
+*shared_time* | Number  | Password expiration in seconds
 
 
 ##### <i class="icon-file"></i> Server values  
 
 Property              | Type     | Description
 --------------------- | ---------|-------------
-[PREF].5250.ip        | String   | Host name of IP address of AS/400 server
-[PREF].5250.port      | String   | Port of 5250 telnet service
-[PREF].5250.name      | String   | Virtual name to be used in web app to access server
-[PREF].5250.codepage  | String   | Code page to use
-[PREF].5250.msgbypass | Boolean  | Auto bypass post sign-on screen
-[PREF].5250.keepalive | Boolean  | Default false, if true, keep session on WebSocket channel close
-[PREF].5250.display_prefix | Boolean | Prefix for display names (optional)
-[PREF].5250.close_msg | String  | Screen message trigger to close sessions
+[PREF].ip        | String   | Host name of IP address of AS/400 server
+[PREF].port      | String   | Port of 5250 telnet service
+[PREF].name      | String   | Virtual name to be used in web app to access server
+[PREF].codepage  | String   | Code page to use
+[PREF].msgbypass | Boolean  | Auto bypass post sign-on screen
+[PREF].keepalive | Boolean  | Default false, if true, keep session on WebSocket channel close
+[PREF].display_prefix | Boolean | Prefix for display names (optional)
+[PREF].close_msg | String  | Screen message trigger to close sessions
 
 <div class="break"></div>
 
@@ -84,23 +84,24 @@ This is list of supported codepages by TN5250j lib.
 If there is more than one server, 5250_prefixes key will have a list of all defined servers. For each server, prefix name is used as a mapping to virtual names. Here we used **dev** and **prod**, **name** property is used in front end.
 
 <pre>
-5250.shared_pwd=cf34cqDCQerc3f4f
-5250.shared_iv=01234567890qwertz
-5250.shared_time=900
-5250_prefixes=dev,prod
+shared_pwd=cf34cqDCQerc3f4f
+shared_iv=01234567890qwertz
+shared_time=900
 
-dev.5250.ip=192.168.1.50
-dev.5250.port=23
-dev.5250.name=DEV_400
-dev.5250.codepage=Cp870
-dev.5250.msgbypass=true
+prefixes=dev,prod
 
-prod.5250.ip=192.168.1.51
-prod.5250.port=23
-prod.5250.name=PROD_400
-prod.5250.codepage=Cp870
-prod.5250.msgbypass=true
-5250.display_prefix=WEB
+dev.ip=192.168.1.50
+dev.port=23
+dev.name=DEV_400
+dev.codepage=Cp870
+dev.msgbypass=true
+
+prod.ip=192.168.1.51
+prod.port=23
+prod.name=PROD_400
+prod.codepage=Cp870
+prod.msgbypass=true
+prod.display_prefix=WEB
 </pre>
 
 ----
@@ -109,13 +110,14 @@ prod.5250.msgbypass=true
 
 ### Install Java web app
 
-To install war file, Java server must be full JEE 7 certified server. Demo code is compiled with Java 1.8 so server should use also Java 1.8. It is possible to compile with Java 1.7.
+To install war file, Java server should be full JEE 7 certified server. Web container only servers are supported with servlet 3.1 specification. If servlet only is used, CDI implementation jar should be added to the application. We have tested JBoss WELD. 
+
+For Tomcat 8+ it is enough to add weld-servlet.jar file to WebContent/WEB-INF/lib.
 
 **war** file can be copied to Java server drop-in folder or installed through web interface. This depends on Java server that is used.  
 
-App uses internal gzip and caching features. In order to replace with new version, active version must be stopped. After replacement with newer version, it is strongly advised for end users to completely clear browser cache.
-
-After app is successfully installed, app can be opened at http://YOUR_WEB_SERVER:PORT/extjs5250
+After app is successfully installed, app can be opened at http://YOUR_WEB_SERVER:PORT/NAME
+where **NAME** is name of **.war** file
 
 ##### <i class="icon-file"></i> WebSocket testing
 
@@ -154,11 +156,11 @@ This version is based on jQuery only and Vanilla JavaScript. Only single 5250 se
 >- with bypass sign-on screen
 
 To start light version use the following link (HOST_NAME is value defined in properties file)
-http://localhost:8080/extjs5250/light?host=[HOST_NAME]
+http://localhost:8080/exttn5250/light?host=[HOST_NAME]
 
 To use bypass sign-on, one can use additional parameters with username and password
 
-http://localhost:8080/extjs5250/light?host=[HOST_NAME]&user=[USER]&password=[PASSWORD]
+http://localhost:8080/exttn5250/light?host=[HOST_NAME]&user=[USER]&password=[PASSWORD]
 
 ##### <i class="icon-file"></i> URL parameters
 
@@ -186,7 +188,7 @@ Example: encrypt(mypassword\njohn\n1234567890123)
 
 If embedding Tn5200 in other web apps based on some other servers, one can get current Java server timestamp to be sure timestamp is synchronized.
 
-Url is http://[serer]:[port]/extjs5250/timestamp
+Url is http://[serer]:[port]/exttn5250/timestamp
 
 This timestamp can be used for password encryption as shown above.
 
@@ -270,3 +272,4 @@ To generate URL for embedding in server side generated page for TN 5250 access, 
 
 ----
 NOTE: Best viewed with https://stackedit.io/editor
+
