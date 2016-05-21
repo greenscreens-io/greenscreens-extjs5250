@@ -1,9 +1,9 @@
 GreenScreens Web Terminal - IBM 5250 Web console
 ======================
 
-**Latest version is 2.6 Release, February, 2016.**
+**Latest version is 2.7 Release, May, 2016.**
 
-NOTE: Project is written in Eclipse and will work with Java 1.7 and up. Test's are made with JBoss 8/9 - Wildfly.
+NOTE: Project is written in Eclipse and will work with Java 1.7 and up. Test's are made with JBoss 8/9/10 - Wildfly and Tomcat 8.
 
 ---
 
@@ -13,7 +13,7 @@ This free open source version is based on open sourced tn5250j library as a conn
 
 First version was published in 2010. but after many request for improvement, we've decided to create a full featured commercial product which was written from scratch and it is based on modern event based networking having high performance, security, integration, technical support, mobile apps, pdf spool printing and many more incoming features in mind.   
 
-Even this free version is good for small teams and basic operations, it is not recommended to use it in real production environment. This free version is not optimized for high traffic and large number of users where a lot of sessions are needed.
+Even this free version is good for small teams and basic operations, it is not recommended  for real production environments. This free version is not optimized for high traffic and large number of users where a lot of sessions are needed.
 
 For this version we do not provide any kind of support, updates and improvements based on user request. From time to time we will publish bug fixes.
 
