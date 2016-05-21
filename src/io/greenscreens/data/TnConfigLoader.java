@@ -26,7 +26,7 @@ public enum TnConfigLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(TnConfigLoader.class);
 
     // suffix for name of properties file
-    private static final String PROP_ID = "5250_5250.properties";
+    private static final String PROP_ID = "io.greenscreens.properties";
 
     private static final String prefix;
 

@@ -124,24 +124,22 @@ enum Tn5250StreamProcessor {
      */
     private static void processCursor(final Screen5250 screen, final int field) {
 
-        int fld = field ;
+        int fld = field;
         boolean isField = fld > 0;
 
         if (isField) {
+        	
+          if (fld > 1000) {
+            fld = fld / 1000;
+          }
 
-            // multiline fields are id + 1000
-            if (fld > 1000) {
-                fld = (fld - 1000);
-            }
-
-            // if field is bypass, skip it
-            final ScreenField sf = screen.getScreenFields().getField(fld-1);
-            if (sf != null) {
-                isField = sf.isBypassField();
-            }
-
+          ScreenField sf = screen.getScreenFields().getField(fld - 1);
+          if (sf != null) {
+        	  isField = sf.isBypassField();
+          }
+          
         } else {
-            fld = screen.getScreenFields().getSize();
+          fld = screen.getScreenFields().getSize();
         }
 
         screen.gotoField(fld);

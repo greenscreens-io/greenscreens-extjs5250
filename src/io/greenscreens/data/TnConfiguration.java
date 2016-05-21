@@ -22,42 +22,41 @@ public class TnConfiguration extends Properties {
 	// 15 seconds time difference for timestamp 
 	private final static long TIMEDIFF = 15000;
 	
-    // suffix for name of properties file
-    private static final String PROP_ID = "5250_5250.properties";
-
     // SUFFIXES FOR REMOTE 5250 HOST
-    private static final String HOST_PREFIX = "5250_prefixes";
+    private static final String HOST_PREFIX = "prefixes";
 
     // address of 5250 server
-    private static final String HOST_IP = "5250.ip";
+    private static final String HOST_IP = "ip";
 
     // port of 5250 server
-    private static final String HOST_PORT = "5250.port";
+    private static final String HOST_PORT = "port";
 
     // virtual name used from frontend
-    private static final String HOST_NAME = "5250.name";
+    private static final String HOST_NAME = "name";
 
     // supported code page
-    private static final String CODE_PAGE = "5250.codepage";
+    private static final String CODE_PAGE = "codepage";
     
     // default false, bypass message screen of another user job
-    private static final String MSG_BYPASS = "5250.msgbypass";
+    private static final String MSG_BYPASS = "msgbypass";
     
     // display name prefix, if given name GT 7, rest will be cutoff
-    private static final String DISPLAY_PREFIX = "5250.display_prefix";
+    private static final String DISPLAY_PREFIX = "display_prefix";
     
-    // trigger for message from as400 used t oclose session on web
-    private static final String CLOSE_MSG = "5250.close_msg";
+    // trigger for message from as400 used to close session on web
+    private static final String CLOSE_MSG = "close_msg";
     
-    private static final String SHARED_PWD = "5250.shared_pwd";
-    private static final String SHARED_IV = "5250.shared_iv";
-    private static final String SHARED_TIME = "5250.shared_time";
+    private static final String SHARED_PWD = "shared_pwd";
+    private static final String SHARED_IV = "shared_iv";
+    private static final String SHARED_TIME = "shared_time";
 
     
     public final String[] getPrefixes() {
+    	
         final String prefixes = (String) this.get(HOST_PREFIX);
+        
         if (prefixes == null) {
-            throw new RuntimeException("5250 hosts not set in configuration file : " + PROP_ID);
+            throw new RuntimeException("5250 hosts not set in configuration file!");
         }
         return prefixes.split(",");
     }

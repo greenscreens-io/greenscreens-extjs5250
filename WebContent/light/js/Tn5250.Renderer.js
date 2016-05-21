@@ -24,6 +24,7 @@ Tn5250.Renderer = (function () {
 
             me.sh = {
             	tb : doc.createElement('table'),
+            	tbody : doc.createElement('tbody'),
                 td: doc.createElement('td'),
                 tr: doc.createElement('tr')
             };
@@ -187,7 +188,7 @@ Tn5250.Renderer = (function () {
                 k = 0, fragment;
 
             var SCR = Tn5250.Decoder;
-            var tbl, row, coll, jobj, cfg, f, n, r, c, t1, t2;
+            var tbl, tbody, row, coll, jobj, cfg, f, n, r, c, t1, t2;
 
             fragment = doc.createDocumentFragment();
 
@@ -197,6 +198,8 @@ Tn5250.Renderer = (function () {
             tbl.className = 'tngrid';
             tbl.setAttribute('did', params.displayID);
             tbl.setAttribute('style', 'display:none;');
+            tbody = me.sh.tbody.cloneNode();
+            tbl.appendChild(tbody);
             fragment.appendChild(tbl);
 
             r = -1;
@@ -214,7 +217,7 @@ Tn5250.Renderer = (function () {
                     }
                     row = me.sh.tr.cloneNode();
                     row.id = 'r' + cfg.n;
-                    tbl.appendChild(row);
+                    tbody.appendChild(row);
                     c = 0;
                 }
                 r = cfg.n;

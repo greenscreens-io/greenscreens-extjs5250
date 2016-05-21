@@ -11,7 +11,7 @@ public enum TnConstants {
     
     //public static final String HOST_5250_CONFIG = TnConstants.class.getCanonicalName() + "_HOST_5250_CONFIG";
 	
-	public static final String VERSION     =  "2.6";
+	public static final String VERSION     =  "2.7";
     
     //public static final String DISPLAY_ID        =  "Display name not set";
     public static final String NOT_CONNECTED     =  "Session not connected";

@@ -32,7 +32,7 @@ Tn5250.WS = (function () {
         return el.join('/');
     }
 
-    var ws = new win.WebSocket(getAddr());
+    var ws = new win.WebSocket(getAddr(), "ws4is");
     ws.tid = 0;
     ws.transactions = {};
 

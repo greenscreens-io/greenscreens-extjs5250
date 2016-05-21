@@ -3,6 +3,7 @@
  */
 package io.greenscreens.websocket;
 
+import javax.enterprise.inject.spi.CDI;
 import javax.inject.Inject;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
@@ -30,6 +31,9 @@ public class WebSocketService {
 
     @OnOpen
     public final void onOpen(final Session session, final EndpointConfig config) {
+    	if (endpoint == null) {
+    		endpoint = CDI.current().select(WebSocketEndpoint.class).get();    		
+    	}
         endpoint.onOpen(session, config);
     }
 

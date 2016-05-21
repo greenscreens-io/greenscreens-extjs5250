@@ -1,3 +1,15 @@
+v2.7 (15.05.2016.)
+-------------------
+
+**JavaScript**
+>- Fix - for websocket subprotocols which prevented proper operation on Tomcat
+>- Fix - for IE cursor positioning, renderer table sections
+
+**Java**
+>- Added - support for Servlet only containers
+>- Fix - multiline field error index calculation 
+
+
 v2.6 (02.01.2016.)
 -------------------
 
