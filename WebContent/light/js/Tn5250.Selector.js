@@ -1,8 +1,8 @@
-/*
+/**
  * Copyright (C) 2015, 2016  GreenScreens Ltd.
+ *
+ * 5250 UI key / mouse select for screen copy
  */
-
-// 5250 UI key / mouse select for screen copy
 Tn5250.Selector = (function () {
 
     var KEY_NAV = {
@@ -35,7 +35,7 @@ Tn5250.Selector = (function () {
     /**
      * Find TR element at pixel position
      */
-    function findEl(x, y) {
+    function findEl(x, y, isStart) {
 
     	var tbl = doc.querySelector('.view table');
     	if (tbl === null) return;
@@ -47,8 +47,20 @@ Tn5250.Selector = (function () {
     	var cw = tbl.offsetWidth / cols;
     	var ch= tbl.offsetHeight / rows;
 
-    	var cc = Math.ceil( x / cw);
-    	var cr = Math.floor( y / ch) ;
+    	var cc = 0;    	
+    	var cr = 0;
+    	
+    	if (isStart) {
+    		cc = Math.round( x / cw);
+    		cr = Math.round( y / ch) ;
+    	} else {
+    		cc = Math.trunc( x / cw);
+    		cr = Math.trunc( y / ch) ;
+    	}
+    	
+    	if (cc >= cols) {
+    		cc = cols - 1;
+    	}
     	if (cr < tbl.rows.length) {
     		return tbl.rows[cr].cells[cc];
     	}
@@ -65,9 +77,9 @@ Tn5250.Selector = (function () {
 		var selW = sel.width();
 		var selH = sel.height();
 
-		var sp = findEl(selPos.left + 5, selPos.top + 5);
-		var ep = findEl(selPos.left + selW, selPos.top + selH - 5);
-
+		var sp = findEl(selPos.left, selPos.top, true);
+		var ep = findEl(selPos.left + selW, selPos.top + selH, false);
+		
         if (sp && ep && sp !== ep ) {
 
         	first = sp;
@@ -75,7 +87,7 @@ Tn5250.Selector = (function () {
 
         	$("body").append("<div id='big-ghost' class='big-ghost'></div>");
         	$("#big-ghost").css({
-                'width': (last.offsetLeft  - first.offsetLeft),
+                'width': (last.offsetLeft  - first.offsetLeft + last.offsetWidth),
                 'height': (last.offsetTop - first.offsetTop + last.offsetHeight),
                 'top': first.offsetTop,
                 'left': first.offsetLeft
@@ -135,46 +147,78 @@ Tn5250.Selector = (function () {
 	 */
 	function mouseEvents(callback) {
 
-		  $(doc).off("mousedown.mselector");
+		  $(doc).off("mousedown.mselector");		  
 		  $(doc).on('mousedown.mselector', '.view', function (e) {
 
+			    //console.log('mousedown.mselector 1');
 			   if (paused || e.which !== 1) return;
 
+			   //console.log('mousedown.mselector 2');
+			   
  			   // fix for virtual keyboard
 			    if (e.target.tagName === 'DIV' || e.target.tagName === 'BUTTON') {
+			    	//console.log('mousedown.mselector 3');
 			    	return;
 			    }
 
-			    if (down) return;
+			    if (down) {
+			    	//console.log('mousedown.mselector 4');
+			    	//return;
+			    }
 			    down = true;
-
+			    //console.log('mousedown.mselector 5');
+			    
 		        $("#big-ghost").remove();
-		        $(".ghost-select").addClass("ghost-active");
-		        $(".ghost-select").css({
-		            'left': e.pageX,
-		            'top': e.pageY
+		        
+		        var selecting = false;
+		        initialW = -1;
+		        initialH = -1;
+		        
+		        $(doc).on("mousemove.mselector", '.view', function(e){
+		        	//console.log('mousemove.mselector');
+		        	
+		        	if (e.buttons === 0) {
+		        		$(doc).off("mousemove.mselector").off("mouseup.mselector");
+		        		return;
+		        	}
+		        	
+		        	if (!selecting) {
+				        $(".ghost-select").addClass("ghost-active");
+				        $(".ghost-select").css({
+				            'left': e.pageX,
+				            'top': e.pageY
+				        });
+
+				        initialW = e.pageX;
+				        initialH = e.pageY;
+				        first = e;
+				        	        
+		        	}
+		        	selecting = true;
+		        	openSelector(e);
 		        });
-
-		        initialW = e.pageX;
-		        initialH = e.pageY;
-		        first = e;
-
-		        $(doc).on("mousemove.mselector", '.view', openSelector);
-		        $(doc).on("mouseup.mselector", '.ghost-select', function(e) {
-
-					$(doc).off("mousemove.mselector").off("mouseup.mselector");
-
-		        	if (down===false) {
-                        return;
-                    }
-
+		        
+		        $(doc).on("mouseup.mselector", function(e) {
+		        	//console.log('mouseup.mselector 1');
+		        	
+		        	$(doc).off("mousemove.mselector").off("mouseup.mselector");
+		        	
+		        	if (!selecting) {
+		        		//console.log('mouseup.mselector 2');
+		        		return;
+		        	}
+		        	selecting = false;
+		        						
+		        	if (down=false) {
+		        		//console.log('mouseup.mselector 3');
+		        		return;
+		        	}
+		        	//console.log('mouseup.mselector 4');
 		        	last = e;
 		        	selectElements(e);
-
-		        	if (typeof callback === 'function' && first !== null && last !== null) {
+		        	if (typeof callback === 'function' && first != null && last != null) {
 		        		callback(first, last);
 		        	}
-
 		        	down = false;
 
 		        });
@@ -224,6 +268,7 @@ Tn5250.Selector = (function () {
         if (KEY_NAV.UP === e.which || KEY_NAV.LEFT === e.which) {
             e.pageX = td.offsetLeft;
             e.pageY = td.offsetTop;
+
         } else if (KEY_NAV.DOWN === e.which || KEY_NAV.RIGHT === e.which) {
             e.pageX = td.offsetLeft + td.offsetWidth;
             e.pageY = td.offsetTop + td.offsetHeight;
@@ -253,10 +298,7 @@ Tn5250.Selector = (function () {
 		    if (e.target.tagName === 'DIV' || e.target.tagName === 'BUTTON') {
 		    	return;
 		    }
-
-        	if (!isSelectionKeys(e)) {
-                return;
-            }
+        	if (!isSelectionKeys(e)) return;
         	stopEvents(e);
 
         	if (down) {
@@ -265,9 +307,7 @@ Tn5250.Selector = (function () {
         	down = true;
 
         	var td = $('.tngrid .focus').get(0);
-        	if (!td){
-                return;
-            }
+        	if (!td) return;
 
         	initialC = td.cellIndex;
         	initialR =  td.parentNode.sectionRowIndex;
@@ -288,9 +328,7 @@ Tn5250.Selector = (function () {
         })
         .on('keyup.kselector', function (e) {
 
-        	if (!(down && e.which === 16)) {
-                return;
-            }
+        	if (!(down && e.which === 16)) return;
         	stopEvents(e);
 
         	last = e;
@@ -313,11 +351,8 @@ Tn5250.Selector = (function () {
 
 	// you're my first, you're my last, you're my everything
 	function getTextFromRange()	{
-
-		$("#big-ghost").remove();
-		if (first === null  || last === null) {
-            return;
-        }
+		
+		if (first === null  || last === null) return null;
 
 		var r1 = first.parentNode.sectionRowIndex;
 		var r2 = last.parentNode.sectionRowIndex;
@@ -335,13 +370,11 @@ Tn5250.Selector = (function () {
 			el = tbl.rows[r1].cells[i];
 			if (el) {
 				if (el.colSpan>1) {
-
 					if (el.innerText.trim().length>0) {
 						s = s + el.innerText;
 					} else {
 						s = s + new Array(el.colSpan+1).join(' ');
 					}
-
 				} else  if (el.innerText) {
 					s = s + el.innerText;
 				} else {
@@ -350,7 +383,9 @@ Tn5250.Selector = (function () {
 			}
 		   i++;
 		  }
-		 s =s + '\n';
+		 if (r1<r2) {
+			 s =s + '\n';
+		 }
 		 r1++;
 		}
 
@@ -365,16 +400,17 @@ Tn5250.Selector = (function () {
      */
     function copy(e) {
 
-    	if (first === null  || last === null) return;
+    	$("#big-ghost").remove();
     	var str = getTextFromRange();
-
+    	if (str === null) return;
+    	
         try {
         	setTimeout( function () {
                 var sel = win.getSelection();
                 sel.removeAllRanges();
 
             	var d = doc.createElement('textarea');
-            	d.id="copy";
+            	d.id="copyData";
             	d.value=str;
             	doc.body.appendChild(d);
 
@@ -382,7 +418,8 @@ Tn5250.Selector = (function () {
             	range.selectNode(d);
             	sel.addRange(range);
 
-            	doc.execCommand('copy');
+            	var sts = doc.execCommand('copy');
+            	
         	}, 0 );
 
         } catch(err) {
@@ -397,23 +434,25 @@ Tn5250.Selector = (function () {
      */
     function monitor() {
 
+    	if (!doc.queryCommandSupported('copy')) {
+    		return;
+    	}
+
     	var second = false;
 
     	$(doc).unbind('copy');
 		$(doc).on('copy', function (e) {
-
-	    	if (!doc.queryCommandSupported('copy')) {
-	    		return;
-	    	}
-
+			
 	    	if (second === true) {
-	    		second = false;
+	    		second = false;	    		
 	    	} else {
-	    		$('#copy').remove();
-	    		second = true;
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+				$('#copyData').remove();
+	    		second = true;	    		
 	    		copy(e);
 	    	}
-
 	    });
     }
 
@@ -423,13 +462,15 @@ Tn5250.Selector = (function () {
 	$(win).resize(function(){
 		$("#big-ghost").remove();
 	});
-
+	
+	
     return {
-
+    	isSelecting : function() {
+    		return down;
+    	},
     	pause : function(val) {
     		paused = val;
     	},
-
         init: function (callback) {
         	monitor();
             start(callback);
