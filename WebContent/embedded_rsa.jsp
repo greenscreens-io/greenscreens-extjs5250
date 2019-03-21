@@ -25,10 +25,10 @@
 </head>
 
 <body>
- <iframe id="ifrm" src="light?host=ISCAR&displayName=PHP00010&user=TOM&password=M%2BDVIKWlqjOwhfqEItP0ruKCLQSlqbmLS5n0RzjQEjLyJbK%2FHE2udIDLOgOgUvQe%2Bs8sFZ4hANTBeEXSY1SbVg%3D%3D" frameborder="0"  height="100%" width="100%">Your browser doesn't support iFrames.</iframe>
+ <iframe id="ifrm" src="lite?host=ISCAR&displayName=PHP00010&user=TOM&password=M%2BDVIKWlqjOwhfqEItP0ruKCLQSlqbmLS5n0RzjQEjLyJbK%2FHE2udIDLOgOgUvQe%2Bs8sFZ4hANTBeEXSY1SbVg%3D%3D" frameborder="0"  height="100%" width="100%">Your browser doesn't support iFrames.</iframe>
 </body>
 
-<script type="text/javascript" charset="UTF-8" src="light/lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="lite/lib/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
     document.oncontextmenu = function (e) {

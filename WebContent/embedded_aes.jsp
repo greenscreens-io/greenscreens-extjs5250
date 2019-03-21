@@ -25,11 +25,11 @@
 </head>
 
 <body>
- <iframe id="ifrm" src="light/?host=LOCAL&displayName=PHP00010&user=TOM&password=0c78c58ea1d17890eaaeb39244bc9b895b7e4db67550de776dd35877009789fb"
+ <iframe id="ifrm" src="lite/?host=LOCAL&displayName=PHP00010&user=TOM&password=0c78c58ea1d17890eaaeb39244bc9b895b7e4db67550de776dd35877009789fb"
          frameborder="0"  height="100%" width="100%">Your browser doesn't support iFrames.</iframe>
 </body>
 
-<script type="text/javascript" charset="UTF-8" src="light/lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="lite/lib/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
     document.oncontextmenu = function (e) {

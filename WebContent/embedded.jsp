@@ -25,10 +25,10 @@
 </head>
 
 <body>
- <iframe id="ifrm" src="light/?host=LOCAL" frameborder="0"  height="90%" width="90%">Your browser doesn't support iFrames.</iframe>
+ <iframe id="ifrm" src="lite/?host=LOCAL" frameborder="0"  height="90%" width="90%">Your browser doesn't support iFrames.</iframe>
 </body>
 
-<script type="text/javascript" charset="UTF-8" src="light/lib/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" charset="UTF-8" src="lite/lib/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
     document.oncontextmenu = function (e) {

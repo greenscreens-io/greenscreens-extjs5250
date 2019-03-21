@@ -54,7 +54,7 @@
 							Default GreenScreens full page demo.
 						</p>
 						<div class="more">
-							<a href="light/?host=LOCAL" title="Default" target="_blank">
+							<a href="lite/?host=LOCAL" title="Default" target="_blank">
 								Open <i class="fa fa-angle-double-right"></i>
 							</a>
 						</div>
