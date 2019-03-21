@@ -1,4 +1,4 @@
-GreenScreens Web Terminal - IBM 5250 Web console
+Green Screens Web Terminal - IBM 5250 Web console
 ======================
 
 **Latest version is 2.7 Release, May, 2016.**
@@ -21,4 +21,4 @@ For full technical support and version that is optimized for large amount of con
 
 Only commercial version is battle tested in real working production environment.
 
-For commercial version and features comparison please visit GreenScreens[http://www.greenscreens.io]
+For commercial version and features comparison please visit Green Screens[http://www.Green Screens.io]
